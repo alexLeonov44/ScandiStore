@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import Header from './components/Header';
+import ProductsOverview from './components/ProductsOverview';
+import SelectedProductOveriew from './components/SelectedProductOveriew';
+import Cart from './components/Cart';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import ThumbnailCart from './components/ThumbnailCart';
+import React from 'react';
+import { connect } from 'react-redux';
+
+class App extends React.Component {
+  render() {
+    const { isThumbnailCartOpen } = this.props;
+    return (
+      <div className="wrapper">
+        <Header />
+        {isThumbnailCartOpen && <ThumbnailCart />}
+        <Route exact path="/" render={() => <ProductsOverview />} />
+        <Route exact path="/product/:productId" render={() => <SelectedProductOveriew />} />
+        <Route exact path="/cart" render={() => <Cart />} />
+      </div>
+    );
+  }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    isThumbnailCartOpen: state.header.isThumbnailCartOpen,
+  };
+};
+export default connect(mapStateToProps)(App);
