@@ -3,6 +3,7 @@ import plusSquare from '../../assets/cartPlusSquare.svg';
 import minusSquare from '../../assets/cartMinusSquare.svg';
 import CartRemoveButton from './CartRemoveButton';
 import PurchasesCardSlider from './PurchasesCardSlider';
+import DeleteItemButton from './DeleteItemButton';
 
 export default function PurchasesCard({
   product,
@@ -50,8 +51,9 @@ export default function PurchasesCard({
           cartProductOnMinus={cartProductOnMinus}
           product={product}
           count={count}
+          removeProductInCart={removeProductInCart}
         />
-        <PurchasesCardSlider gallery={gallery}/>
+        <PurchasesCardSlider gallery={gallery} />
       </div>
     </div>
   );
@@ -71,17 +73,16 @@ const PurchasesCardAttributes = ({ attributes }) => {
     </div>
   );
 };
-const PurchasesCardCounter = ({ cartProductOnPlus, cartProductOnMinus, count, product }) => {
+const PurchasesCardCounter = ({ cartProductOnPlus, cartProductOnMinus, count, product,removeProductInCart }) => {
   return (
     <div className="c-purchases-card__right-side__count">
       <img onClick={() => cartProductOnPlus(product)} src={plusSquare} alt="plus-square" />
       <span>{count}</span>
-      <img
-        className={`${count === 1 && 'c-purchases-card__right-side__count__minus-disable'}`}
-        onClick={() => cartProductOnMinus(product)}
-        src={minusSquare}
-        alt="minus-square"
-      />
+      {count === 1 ? (
+        <DeleteItemButton removeProductInCart={removeProductInCart} product={product}/>
+      ) : (
+        <img onClick={() => cartProductOnMinus(product)} src={minusSquare} alt="minus-square" />
+      )}
     </div>
   );
 };

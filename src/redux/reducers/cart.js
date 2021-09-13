@@ -30,6 +30,7 @@ const cart = (state = initialState, action) => {
             mock.count++;
             self.splice(index, 1, mock);
           }
+          return el 
         });
       }
       return newState;

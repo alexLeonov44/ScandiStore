@@ -15,31 +15,20 @@ import {
 } from '../redux/actions/header';
 
 import { graphql } from '@apollo/client/react/hoc';
-import { gql } from '@apollo/client';
-
 import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'redux';
+import { HEADER_TARCKS } from '../gqlQueries';
 
-const TARCKS = gql`
-  query Query {
-    categories {
-      name
+class Header extends React.PureComponent {
+  componentDidUpdate(prevProps) {
+    if (
+      this.props.purchases !== prevProps.purchases ||
+      this.props.selectedCurrency !== prevProps.selectedCurrency
+    ) {
+      this.props.getPurchasesAmount(this.props.purchases);
+      this.props.getTotalPrice(this.props.purchases);
     }
-    currencies
   }
-`;
-
-class Header extends React.Component {
-  state = {
-    ThumbnailCartOpen: true,
-  };
-  componentDidUpdate(prevProps){
-    
-    if (this.props.purchases !== prevProps.purchases) {
-      this.props.getPurchasesAmount(this.props.purchases)
-      this.props.getTotalPrice(this.props.purchases)
-  }
- }
   cartButtonOnClick() {}
   cartButtonRef = React.createRef();
   render() {
@@ -67,14 +56,15 @@ class Header extends React.Component {
     return (
       <div className="header">
         <nav className="header__category" style={{ display: 'flex' }}>
-          {categories?.map((category, i) => (
-            <CategoryButton
-              key={category + i}
-              category={category}
-              selectedCategory={selectedCategory}
-              setActiveCategory={setActiveCategory}
-            />
-          ))}
+          {categories?.length &&
+            [...categories, { __typename: 'Category', name: 'all' }].map((category, i) => (
+              <CategoryButton
+                key={category + i}
+                category={category}
+                selectedCategory={selectedCategory}
+                setActiveCategory={setActiveCategory}
+              />
+            ))}
         </nav>
         <div className="h-back-button">
           <Link to="/">
@@ -86,9 +76,10 @@ class Header extends React.Component {
             currencies={currencies}
             setActiveCurrency={setActiveCurrency}
             currencySymbols={currencySymbols}
+            setThumbnailCartOpen={setThumbnailCartOpen}
           />
-          <div ref={this.cartButtonRef} className="h-right_side__block__cart_button">
-            <img onClick={cartBtnOnclick} src={cartButton} alt="backButton"></img>
+          <div onClick={cartBtnOnclick} ref={this.cartButtonRef} className="h-right_side__block__cart_button">
+            <img  src={cartButton} alt="backButton"></img>
             {!!purchases.length && (
               <>
                 <img
@@ -111,10 +102,17 @@ const mapStateToProps = (state) => ({
   purchasesAmount: state.header.purchasesAmount,
   isThumbnailCartOpen: state.header.isThumbnailCartOpen,
   purchases: state.cart.purchases,
+  selectedCurrency: state.header.selectedCurrency,
 });
 
 export default compose(
-  connect(mapStateToProps, { setActiveCategory, setActiveCurrency, setThumbnailCartOpen,getPurchasesAmount,getTotalPrice }),
+  connect(mapStateToProps, {
+    setActiveCategory,
+    setActiveCurrency,
+    setThumbnailCartOpen,
+    getPurchasesAmount,
+    getTotalPrice,
+  }),
   withRouter,
-  graphql(TARCKS),
+  graphql(HEADER_TARCKS),
 )(Header);

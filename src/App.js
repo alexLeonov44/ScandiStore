@@ -3,12 +3,12 @@ import ProductsOverview from './components/ProductsOverview';
 import SelectedProductOveriew from './components/SelectedProductOveriew';
 import Cart from './components/Cart';
 
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import {  Route } from 'react-router-dom';
 import ThumbnailCart from './components/ThumbnailCart';
 import React from 'react';
 import { connect } from 'react-redux';
 
-class App extends React.Component {
+class App extends React.PureComponent {
   render() {
     const { isThumbnailCartOpen } = this.props;
     return (

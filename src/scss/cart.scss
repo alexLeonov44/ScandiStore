@@ -110,11 +110,7 @@
                    background-color: #e5e5e5;
                }
            }
-          &__minus-disable{
-              opacity: 0.5;
-              cursor: default !important;
-              pointer-events:none;
-          }
+         
         }
         &__images{
             display: flex;

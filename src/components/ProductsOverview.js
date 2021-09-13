@@ -4,33 +4,13 @@ import { compose } from 'redux';
 import ProductItemCard from '../pages/product/ProductItemCard';
 
 import { graphql } from '@apollo/client/react/hoc';
-import { gql } from '@apollo/client';
-
 import {Link,withRouter} from "react-router-dom";
+import { PROD_OVERWIEW_TARCKS } from '../gqlQueries';
 
-const TARCKS = gql`
-query Query($categoryInput: CategoryInput) {
-  category(input: $categoryInput) {
-    name
-    products {
-      name
-      id
-      inStock
-      gallery
-      category
-      prices {
-        currency
-        amount
-      }
-      brand
-    }
-  }
-}, 
-`
-class ProductsOverview extends React.Component {
+class ProductsOverview extends React.PureComponent {
  
   render() {
-      const {category,id} = this.props.data
+      const {category} = this.props.data
       const {selectedCurrency,currencySymbols,purchases} = this.props 
 
       if(!this.props.data.category) return '......'
@@ -62,11 +42,11 @@ const gqOptions = {
   options: props => ({
     variables: {
       "categoryInput": {
-        "title": props.selectedCategory
+        "title": props?.selectedCategory === 'all' ?  '' : props.selectedCategory
       }
     },
   })
 }
 
 export default compose(
-  connect(mapStateToProps),withRouter,graphql(TARCKS,gqOptions))(ProductsOverview)
+  connect(mapStateToProps),withRouter,graphql(PROD_OVERWIEW_TARCKS,gqOptions))(ProductsOverview)

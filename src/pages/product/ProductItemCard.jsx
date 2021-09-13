@@ -12,7 +12,7 @@ export default function ProductItemCard({ product, selectedCurrency, currencySym
         className={`products__productItem_card__img ${
           inStock && 'products__productItem_card__img__out_of_stock '
         } `}>
-        <img src={img} />
+        <img src={img} alt="productItem card" />
       </div>
       {productInCart && (
         <div className="products__productItem_card__in-cart-icon">

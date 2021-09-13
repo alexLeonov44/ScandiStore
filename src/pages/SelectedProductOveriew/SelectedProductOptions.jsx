@@ -3,8 +3,8 @@ import AddTocartButton from './AddTocartButton';
 import SelectedProductAttributes from './SelectedProductAttributes';
 
 export default function SelectedProductOptions({
-  productBrand,
-  productName,
+  brand,
+  name,
   attributes,
   activeAttributes,
   setActiveAttribute,
@@ -37,8 +37,8 @@ export default function SelectedProductOptions({
   return (
     <div className="options" style={{ width: '293px' }}>
       <div className="options__name-block">
-        <h3>{productBrand}</h3>
-        <h4>{productName}</h4>
+        <h3>{brand}</h3>
+        <h4>{name}</h4>
       </div>
       {!!attributes.length && (
         <SelectedProductAttributes
@@ -47,7 +47,6 @@ export default function SelectedProductOptions({
           setActiveAttribute={setActiveAttribute}
           attributesAlert={attributesAlert}
           attributeKeys={attributeKeys}
-          attributesAlert={attributesAlert}
         />
       )}
       <div className="options__price-block">
@@ -62,7 +61,7 @@ export default function SelectedProductOptions({
         attributes={attributes}
         inStock={inStock}
       />
-      <div className="options__description-block">{description}</div>
+      <div className="options__description-block">{description.replace(new RegExp('<[^>]*>', 'g'), '')}</div>
     </div>
   );
 }

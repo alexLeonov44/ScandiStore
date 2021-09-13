@@ -6,15 +6,14 @@ export default function CategoryButton({ category, selectedCategory, setActiveCa
   let categoryName = category.name;
 
   const buttonOnClick = (categoryName) => {
-    setActiveCategory(categoryName);
+      setActiveCategory(categoryName);
     history.push('/');
   };
-
   return (
     <div
       onClick={() => buttonOnClick(categoryName)}
       className={`hc-button ${selectedCategory === categoryName && 'hc-button__active'}`}>
-      <p>{categoryName}</p>
+      <p>{categoryName || 'all'}</p>
     </div>
   );
 }

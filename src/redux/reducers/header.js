@@ -7,7 +7,7 @@ import {
 } from '../types/header';
 
 const initialState = {
-  selectedCategory: null,
+  selectedCategory: '',
   selectedCurrency: 'USD',
   currencySymbols: { USD: '$', GBP: '£', AUD: '$', JPY: '¥', RUB: '₽' },
   isThumbnailCartOpen: false,
