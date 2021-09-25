@@ -3,6 +3,7 @@ import {
   CART_PRODUCT_ON_MINUS,
   CART_PRODUCT_ON_PLUS,
   REMOVE_PRODUCT_IN_CART,
+  SET_ITEM_FROM_LOCAL_STORAGE,
 } from '../types/cart';
 
 const initialState = {
@@ -76,6 +77,10 @@ const cart = (state = initialState, action) => {
           }
         }),
       };
+    case SET_ITEM_FROM_LOCAL_STORAGE:
+      return {
+        ...state,purchases:[...action.purchases]
+      }
     default:
       return state;
   }

@@ -4,7 +4,7 @@ import Tcard from '../pages/ThumbnailCart/Tcard';
 import { getTotalPrice, setThumbnailCartOpen } from '../redux/actions/header';
 import { cartProductOnPlus, cartProductOnMinus } from '../redux/actions/cart';
 import cartEmptyLogo from '../assets/cartEmptyLogo.svg';
-import { Link } from 'react-router-dom';
+import { Link ,withRouter} from 'react-router-dom';
 
 class ThumbnailCart extends React.PureComponent {
   constructor(props) {
@@ -37,7 +37,9 @@ class ThumbnailCart extends React.PureComponent {
       totalPrice,
     } = this.props;
     const checkout = () => {
-      purchases.length ? alert('order is processed!') : alert('cart is empty! take something');
+      purchases.length ? this.props.history.push({
+        pathname: `/check-out`,
+    })  : alert('cart is empty! take something');
     };
     if (!purchases.length) {
     }
@@ -100,4 +102,4 @@ export default connect(mapStateToProps, {
   cartProductOnPlus,
   cartProductOnMinus,
   getTotalPrice
-})(ThumbnailCart);
+})(withRouter(ThumbnailCart)); 

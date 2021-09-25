@@ -5,6 +5,8 @@ import cartEmptyLogo from '../assets/cartEmptyLogo.svg';
 import PurchasesCard from '../pages/cart/PurchasesCard';
 import { cartProductOnPlus, cartProductOnMinus, removeProductInCart } from '../redux/actions/cart';
 class Cart extends React.PureComponent {
+
+  
   render() {
     const {
       purchases,
@@ -14,6 +16,7 @@ class Cart extends React.PureComponent {
       cartProductOnMinus,
       removeProductInCart,
     } = this.props;
+    
     return (
       <div className="cart">
         <div className="c-heading">
