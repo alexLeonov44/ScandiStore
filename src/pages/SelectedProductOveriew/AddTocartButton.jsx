@@ -11,6 +11,7 @@ export default function AddTocartButton({ addToCartOnClick, attributeKeys, attri
   React.useEffect(() => {
     setGoToTheCart(false);
   }, [attributeKeys]);
+ 
   return (
     <div
       onClick={() => selectButtonOptions()}

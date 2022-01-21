@@ -1,8 +1,9 @@
 import React from 'react';
+import { memo } from 'react';
 import AddTocartButton from './AddTocartButton';
 import SelectedProductAttributes from './SelectedProductAttributes';
 
-export default function SelectedProductOptions({
+export default memo(function SelectedProductOptions({
   brand,
   name,
   attributes,
@@ -64,4 +65,4 @@ export default function SelectedProductOptions({
       <div className="options__description-block">{description.replace(new RegExp('<[^>]*>', 'g'), '')}</div>
     </div>
   );
-}
+})
